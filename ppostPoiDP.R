@@ -1,6 +1,6 @@
 # Distribuição a posteriori usando o algoritmo de ...
 #
-ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 1E-3) {
+ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 1E-1) {
   nx <- length(x) # tamanho da amostra
   N <- min(nx, ceiling(1-alpha*log(eps/(4*nx)))) # num. de termos da representa??o em soma do DP
   lam <- rgamma(N, shape = phi, rate = phi/lam0) # valores iniciais para lambda
