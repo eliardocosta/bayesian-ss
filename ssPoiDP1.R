@@ -73,14 +73,4 @@ ssPoiDP1 <- function(lam0, phi, w, rho, alpha, len.max, inc = 1E2 , R = 1E2) {
   cat("n (PoiDP) =", n, "Comp est =", len.med, "\n")
 } # FIM
 
-ssPoiDP1(lam0=10, phi=5, w=1, rho=0.05, alpha=0.5, len.max=2, R=100)
-
-lam0=10
-phi=50 
-w=0.01 
-rho=0.05 
-alpha=0.5
-len.max=2
-
-plot(obj.dpost$lam, obj.dpost$ddist,  type = "h")
-plot(obj.dpriori$lam, obj.dpriori$ddist, type = "h")
+# ssPoiDP1(lam0=10, phi=5, w=1, rho=0.05, alpha=0.5, len.max=2, R=100)
