@@ -2,7 +2,7 @@
 #
 pprioriDP <- function(n, alpha, lam0, phi, cgrid = 0.1) {
   #M <- ceiling(1-alpha*log(eps/(4*n)))
-  M <- 1E3
+  M <- 1E2
   V <- rbeta(M-1, 1, alpha)
   V <- append(V, 1)
   p <- V[1]
