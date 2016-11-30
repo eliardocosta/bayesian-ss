@@ -8,8 +8,8 @@ ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 
   K <- numeric() # vetor indexador de cluster
   pstar <- matrix(NA, nx, N) 
   nclu <- numeric() # vetor com num. de cluster por itera??o
-  mclu <- numeric() # vetor com m?dia do num. de cluster por itera??o
-  for (r in 1:nburn) { # in?cio do loop do burn-in
+  #mclu <- numeric() # vetor com m?dia do num. de cluster por itera??o
+  for (r in 1:nburn) { # inicio do loop do burn-in
     for(i in 1:nx) {
       pstar[i, ] <- p*dpois(x[i], w*lam)
     }
@@ -17,9 +17,9 @@ ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 
       K[i] <- sample.int(N, size = 1, prob = pstar[i, ])
     }
     Ktable <- as.data.frame(table(K), stringsAsFactors = FALSE) # tabela freq. dos K's
-    Kstar <- as.vector(Ktable[ ,1], mode="numeric") # vetor com os K's ?nicos
+    Kstar <- as.vector(Ktable[ ,1], mode = "numeric") # vetor com os K's unicos
     nclu <- append(nclu, length(Kstar))
-    mclu <- append(mclu, mean(nclu))
+    #mclu <- append(mclu, mean(nclu))
     m <- rep(0, N)
     for (j in 1:length(Ktable[ ,2])) {
       for (i in 1:N) {
@@ -37,7 +37,7 @@ ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 
                               rate = length(set)*w+phi/lam0)
     }
   } # fim do loop do burn-in
-  # in?cio da amostragem da posteroiri
+  # inicio da amostragem da posteroiri
   pesos <- matrix(NA, nsam, N) # pesos a posteriori da soma truncada amostrados por itera??o
   lam.post <- matrix(NA, nsam, N) # lambda's a posteroiri amostrados por itera??o
   for (r in 1:nsam) { # in?cio do loop p/ amostras a posteriori
