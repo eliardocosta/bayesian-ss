@@ -78,7 +78,7 @@ ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 
     }
   }
   ppost <- apply(ppost.it, 2, mean) # estimativa da prob. acumulada a posterirori
-  return(list(lam = grid.val, fdist = ppost, mclu = mclu))
+  return(list(lam = grid.val, fdist = ppost, nclu = nclu))
 } # FIM
 
 # ppostPoiDP(x = x, w = w, phi = phi, lam0 = lam0, alpha = alpha, nburn = 500, nsam = 1E3)
