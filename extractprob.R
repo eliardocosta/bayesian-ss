@@ -8,4 +8,4 @@ extract.prob <- function(obj) { # obter a distribuição de probabilidade do 'ob
   }
   dprob <- dprob[-1]
   return(list(lam = grid.val, ddist = dprob))
-} # FIM
+} # FIM TESTE
