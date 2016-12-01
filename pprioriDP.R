@@ -10,11 +10,11 @@ pprioriDP <- function(n, alpha, lam0, phi, cgrid = 0.1) {
     p[i] <- V[i]*(1-V[i-1])*p[i-1]/V[i-1]
   }
   lam <- rgamma(M, shape = phi, rate = phi/lam0)
-  grid.val1 <- seq(0, ceiling(max(lam)), cgrid) # grid de valores que define a parti??o sobre poss?veis valores de lambda
+  grid.val1 <- seq(0, ceiling(max(lam)), cgrid) # grid de valores que define a particao sobre possiveis valores de lambda
   #grid.val1 <- grid.val1[-1]
   grid.val1 <- tail(grid.val1, -1)
   ppriori <- numeric()
-  #matrix(NA, nsam, length(grid.val)) # prob. acumulada a posteriori em rela??o aos valores do gride por itera??o
+  #matrix(NA, nsam, length(grid.val)) # prob. acumulada a posteriori em relacao aos valores do gride por iteracao
   for (i in 1:length(grid.val1)) {
     ppriori[i] <- sum(p[which(lam <= grid.val1[i])])
   }
