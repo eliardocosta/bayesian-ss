@@ -2,7 +2,7 @@
 #
 ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 1E-1) {
   nx <- length(x) # tamanho da amostra
-  N <- min(nx, ceiling(1-alpha*log(eps/(4*nx)))) # num. de termos da representa??o em soma do DP
+  N <- min(nx, ceiling(1-alpha*log(eps/(4*nx)))) # num. de termos da representacao em soma do DP
   lam <- rgamma(N, shape = phi, rate = phi/lam0) # valores iniciais para lambda
   p <- rep(1/N, N) # prob's iniciais p/ cada termo da soma truncada
   K <- numeric() # vetor indexador de cluster
@@ -33,14 +33,14 @@ ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 
       for (i in 1:nx) {
         if (K[i] == Kstar[j]) set = append(set, i)
       }
-      lam[Kstar[j]] <- rgamma(1, shape = phi+sum(x[set]), 
-                              rate = length(set)*w+phi/lam0)
+      lam[Kstar[j]] <- rgamma(1, shape = phi + sum(x[set]), 
+                              rate = length(set)*w + phi/lam0)
     }
   } # fim do loop do burn-in
   # inicio da amostragem da posteroiri
-  pesos <- matrix(NA, nsam, N) # pesos a posteriori da soma truncada amostrados por itera??o
-  lam.post <- matrix(NA, nsam, N) # lambda's a posteroiri amostrados por itera??o
-  for (r in 1:nsam) { # in?cio do loop p/ amostras a posteriori
+  pesos <- matrix(NA, nsam, N) # pesos a posteriori da soma truncada amostrados por iteracao
+  lam.post <- matrix(NA, nsam, N) # lambda's a posteroiri amostrados por iteracao
+  for (r in 1:nsam) { # inicio do loop p/ amostras a posteriori
     for(i in 1:nx) {
       pstar[i, ] <- p*dpois(x[i], w*lam)
     }
@@ -48,7 +48,7 @@ ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 
       K[i] <- sample.int(N, size = 1, prob = pstar[i, ])
     }
     Ktable <- as.data.frame(table(K), stringsAsFactors = FALSE) # tabela freq. dos K's
-    Kstar <- as.vector(Ktable[ ,1], mode="numeric") # vetor com os K's ?nicos
+    Kstar <- as.vector(Ktable[ ,1], mode = "numeric") # vetor com os K's unicos
     m <- rep(0, N)
     for (j in 1:length(Ktable[ ,2])) {
       for (i in 1:N) {
@@ -62,16 +62,16 @@ ppostPoiDP <- function (x, w, phi, lam0, alpha, nburn, nsam, cgrid = 0.1, eps = 
       for (i in 1:nx) {
         if (K[i] == Kstar[j]) set = append(set, i)
       }
-      lam[Kstar[j]] <- rgamma(1, shape = phi+sum(x[set]), 
-                              rate = length(set)*w+phi/lam0)
+      lam[Kstar[j]] <- rgamma(1, shape = phi + sum(x[set]), 
+                              rate = length(set)*w + phi/lam0)
     }
     lam.post[r, ] <- lam
     pesos[r, ] <- p
   } # fim do loop p/ amostras a posteriori
-  grid.val <- seq(0, ceiling(max(lam.post)), cgrid) # grid de valores que define a parti??o sobre poss?veis valores de lambda
+  grid.val <- seq(0, ceiling(max(lam.post)), cgrid) # grid de valores que define a particao sobre possiveis valores de lambda
   #grid.val <- grid.val[-1]
   grid.val <- tail(grid.val, -1)
-  ppost.it <- matrix(NA, nsam, length(grid.val)) # prob. acumulada a posteriori em rela??o aos valores do gride por itera??o
+  ppost.it <- matrix(NA, nsam, length(grid.val)) # prob. acumulada a posteriori em relacao aos valores do gride por iteracao
   for (i in 1:nsam) {
     for (j in 1:length(grid.val)) {
       ppost.it[i, j] <- sum(p[which(lam.post[i, ] <= grid.val[j])])  
