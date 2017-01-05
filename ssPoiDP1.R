@@ -14,7 +14,7 @@ ssPoiDP1 <- function(lam0, phi, w, rho, alpha, crit, len.max = NULL, len = NULL,
         var.post <- numeric()
         for (j in 1:R) {
           x <- rnbinom(n, mu = w*lam0, size = phi)
-          obj.ppost <- exp.postDPmix(x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha, cgrid = cgrid, nsam = 5E1)
+          obj.ppost <- exp.postDPmix(x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha, cgrid = cgrid)
           obj.dpost <- extract.prob(obj.ppost)
           vals <- obj.dpost$lam
           probs <- obj.dpost$ddist
@@ -38,7 +38,7 @@ ssPoiDP1 <- function(lam0, phi, w, rho, alpha, crit, len.max = NULL, len = NULL,
         cob <- numeric()
         for (j in 1:R) {
           x <- rnbinom(n, mu = w*lam0, size = phi)
-          obj.ppost <- exp.postDPmix(x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha, cgrid = cgrid, nsam = 5E1)
+          obj.ppost <- exp.postDPmix(x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha, cgrid = cgrid)
           obj.dpost <- extract.prob(obj.ppost)
           vals <- obj.dpost$lam
           probs <- obj.dpost$ddist
@@ -67,7 +67,7 @@ ssPoiDP1 <- function(lam0, phi, w, rho, alpha, crit, len.max = NULL, len = NULL,
         len <- numeric()
         for (j in 1:R) {
           x <- rnbinom(n, mu = w*lam0, size = phi)
-          obj.ppost <- exp.postDPmix(x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha, cgrid = cgrid, nsam = 5E1)
+          obj.ppost <- exp.postDPmix(x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha, cgrid = cgrid)
           obj.dpost <- extract.prob(obj.ppost)
           vals <- obj.dpost$lam
           probs <- obj.dpost$ddist
