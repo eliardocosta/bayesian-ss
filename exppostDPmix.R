@@ -1,4 +1,5 @@
 exp.postDPmix <- function(x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha, cgrid = 1E-2, nsam = 1E2) {
+  source("https://raw.githubusercontent.com/eliardocosta/bayesian-ss/master/rdistnu.R")
   n <- length(x)
   samcon.lam <- rdistnu(nsam = nsam, x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha)
   grid <- seq(0, ceiling(max(samcon.lam)), cgrid)
