@@ -12,7 +12,6 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
     n <- n0
     while (mean(cov) < 1 - rho) {
       n <- n + 1
-      print(n)
       cov <- numeric()
       probs <- numeric()
       for (i in 1:R1) {
@@ -30,7 +29,6 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
         }
         cov <- append(cov, mean(probs))
       }
-      print(mean(cov))
     }
     cat("n (BNPearson) =", n, "Cob est =", mean(cov), "\n")
   } # FIM CRITERIO CCM1
@@ -39,7 +37,6 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
     n <- n0
     while (mean(len) > len.max) {
       n <- n + 1
-      print(n)
       len <- numeric()
       lens <- numeric()
       for (i in 1:R1) {
@@ -56,8 +53,10 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
         }
         len <- append(len, mean(lens))
       }
-      print(mean(len))
     }
     cat("n (BNPearson) =", n, "Comp est =", mean(len), "\n")
   } # FIM CRITERIO CCM2
 } # FIM
+
+
+ssBNPearson1(lam0 = 10, theta0 = 2, phi = 5, w = 1, rho = 0.05, crit = "CCM2", len.max = 2)
