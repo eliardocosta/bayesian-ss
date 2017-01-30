@@ -1,9 +1,9 @@
 ssPoiGamma1 <- function(lam0, phi, w, rho, crit, len = NULL, 
                          len.max = NULL, R = 1E2, srep = 1E2, n0 = 0) {
   cat("\nCall for PoiGamma \n")
-  if (crit == "CVM") cat("phi =", phi,"; w =", w, "; alpha =", alpha,"; eps =", eps, "\n")
-  if (crit == "CCM1") cat("phi =", phi,"; w =", w, "; alpha =", alpha,"; l =", len, "\n")
-  if (crit == "CCM2") cat("phi =", phi,"; w =", w, "; alpha =", alpha,"; l.max =", len.max, "\n")
+  if (crit == "CVM") cat("phi =", phi,"; w =", w, "; eps =", eps, "\n")
+  if (crit == "CCM1") cat("phi =", phi,"; w =", w, "; l =", len, "\n")
+  if (crit == "CCM2") cat("phi =", phi,"; w =", w, "; l.max =", len.max, "\n")
   if (crit == "CVM") {
     break
   }
