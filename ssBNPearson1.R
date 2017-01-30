@@ -1,11 +1,5 @@
 ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL, 
                         len.max = NULL, R1 = 1E2, R2 = 1E2, n0 = 0) {
-  #install.packages("PearsonDS")
-  #require("PearsonDS")
-  #phi = 5
-  #w = 1
-  #theta0 = 5
-  #lam0 = w*10/phi
   cat("\nCall for BNPearson \n")
   if (crit == "CVM") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; eps =", eps, "\n")
   if (crit == "CCM1") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; l =", len, "\n")
@@ -26,7 +20,6 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
         x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
         s <- sum(x)
         for (i in 1:R2) {
-          #s <- rnbinom(srep, mu = n*w*lam0, size = n*phi)
           kappa <- theta0 + s
           psi <- theta0/lam0 + n*phi + 1
           a <- hpdPearsonVI(len = len, kappa = kappa, psi = psi, phi = phi, w = w)
@@ -34,7 +27,6 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
                           ppearsonVI(a + len, a = kappa, b = psi, location = 0, 
                                      scale = phi/w) - ppearsonVI(a, a = kappa, b = psi, 
                                                              location = 0, scale = phi/w))
-     #     print(probs)
         }
         cov <- append(cov, mean(probs))
       }
