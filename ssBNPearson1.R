@@ -1,5 +1,5 @@
 ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL, 
-                        len.max = NULL, R1 = 1E2, R2 = 1E2, n0 = 0) {
+                        len.max = NULL, R1 = 1E3, n0 = 0) {
   cat("\nCall for BNPearson \n")
   if (crit == "CVM") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; eps =", eps, "\n")
   if (crit == "CCM1") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; l =", len, "\n")
@@ -16,18 +16,18 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
       probs <- numeric()
       for (i in 1:R1) {
         lam <- rpearsonVI(n, a = theta0, b = theta0/lam0 + 1, location = 0, scale = phi/w)
-        for (i in 1:R2) {
+       # for (i in 1:R2) {
           x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
           s <- sum(x)
           kappa <- theta0 + s
           psi <- theta0/lam0 + n*phi + 1
           a <- hpdPearsonVI(len = len, kappa = kappa, psi = psi, phi = phi, w = w)
-          probs <- append(probs, 
+          cov <- append(cov, 
                           ppearsonVI(a + len, a = kappa, b = psi, location = 0, 
                                      scale = phi/w) - ppearsonVI(a, a = kappa, b = psi, 
                                                              location = 0, scale = phi/w))
-        }
-        cov <- append(cov, mean(probs))
+      #  }
+        #cov <- append(cov, mean(probs))
       }
     }
     cat("n (BNPearson) =", n, "Cob est =", mean(cov), "\n")
@@ -41,17 +41,17 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
       lens <- numeric()
       for (i in 1:R1) {
         lam <- rpearsonVI(n, a = theta0, b = theta0/lam0 + 1, location = 0, scale = phi/w)
-        for (i in 1:R2) {
+        #for (i in 1:R2) {
           x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
           s <- sum(x)
           kappa <- theta0 + s
           psi <- theta0/lam0 + n*phi + 1
-          lens <- append(lens, qpearsonVI(1 - rho/2, a = kappa, b = psi, location = 0, 
+          len <- append(len, qpearsonVI(1 - rho/2, a = kappa, b = psi, location = 0, 
                                           scale = phi/w) - qpearsonVI(rho/2, a = kappa, 
                                                                       b = psi, location = 0,
                                                                       scale = phi/w))
-        }
-        len <- append(len, mean(lens))
+        #}
+        #len <- append(len, mean(lens))
       }
     }
     cat("n (BNPearson) =", n, "Comp est =", mean(len), "\n")
