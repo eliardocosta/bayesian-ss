@@ -16,9 +16,9 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
       probs <- numeric()
       for (i in 1:R1) {
         lam <- rpearsonVI(n, a = theta0, b = theta0/lam0 + 1, location = 0, scale = phi/w)
-        x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
-        s <- sum(x)
         for (i in 1:R2) {
+          x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
+          s <- sum(x)
           kappa <- theta0 + s
           psi <- theta0/lam0 + n*phi + 1
           a <- hpdPearsonVI(len = len, kappa = kappa, psi = psi, phi = phi, w = w)
@@ -41,9 +41,9 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
       lens <- numeric()
       for (i in 1:R1) {
         lam <- rpearsonVI(n, a = theta0, b = theta0/lam0 + 1, location = 0, scale = phi/w)
-        x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
-        s <- sum(x)
         for (i in 1:R2) {
+          x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
+          s <- sum(x)
           kappa <- theta0 + s
           psi <- theta0/lam0 + n*phi + 1
           lens <- append(lens, qpearsonVI(1 - rho/2, a = kappa, b = psi, location = 0, 
