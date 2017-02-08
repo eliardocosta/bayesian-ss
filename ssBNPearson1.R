@@ -1,5 +1,5 @@
-ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL, 
-                        len.max = NULL, R1 = 1E3, n0 = 0) {
+ssBNPearson1 <- function(crit, lam0, theta0, phi, w, rho, len = NULL, 
+                        len.max = NULL, R = 1E3, n0 = 0) {
   cat("\nCall for BNPearson \n")
   if (crit == "CVM") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; eps =", eps, "\n")
   if (crit == "CCM1") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; l =", len, "\n")
@@ -14,23 +14,20 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
       n <- n + 1
       cov <- numeric()
       probs <- numeric()
-      for (i in 1:R1) {
+      for (i in 1:R) {
         lam <- rpearsonVI(n, a = theta0, b = theta0/lam0 + 1, location = 0, scale = phi/w)
-       # for (i in 1:R2) {
-          x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
-          s <- sum(x)
-          kappa <- theta0 + s
-          psi <- theta0/lam0 + n*phi + 1
-          a <- hpdPearsonVI(len = len, kappa = kappa, psi = psi, phi = phi, w = w)
-          cov <- append(cov, 
+        x <- rnbinom(n, mu = w*lam, size = phi)
+        sn <- sum(x)
+        kappa <- theta0 + sn
+        psi <- theta0/lam0 + n*phi + 1
+        a <- hpdPearsonVI(len = len, kappa = kappa, psi = psi, phi = phi, w = w)
+        cov <- append(cov, 
                           ppearsonVI(a + len, a = kappa, b = psi, location = 0, 
                                      scale = phi/w) - ppearsonVI(a, a = kappa, b = psi, 
                                                              location = 0, scale = phi/w))
-      #  }
-        #cov <- append(cov, mean(probs))
       }
     }
-    cat("n (BNPearson) =", n, "Cob est =", mean(cov), "\n")
+    cat("n =", n, "; cob. estimada =", mean(cov), "\n")
   } # FIM CRITERIO CCM1
   if (crit == "CCM2") { # INICIO CRITERIO CCM2
     len <- len.max + 1
@@ -38,22 +35,18 @@ ssBNPearson1 <- function(lam0, theta0, phi, w, rho, crit, len = NULL,
     while (mean(len) > len.max) {
       n <- n + 1
       len <- numeric()
-      lens <- numeric()
-      for (i in 1:R1) {
+      for (i in 1:R) {
         lam <- rpearsonVI(n, a = theta0, b = theta0/lam0 + 1, location = 0, scale = phi/w)
-        #for (i in 1:R2) {
-          x <- rnbinom(length(lam), mu = w*w*lam/phi, size = phi)
-          s <- sum(x)
-          kappa <- theta0 + s
-          psi <- theta0/lam0 + n*phi + 1
-          len <- append(len, qpearsonVI(1 - rho/2, a = kappa, b = psi, location = 0, 
+        x <- rnbinom(n, mu = w*lam, size = phi)
+        sn <- sum(x)
+        kappa <- theta0 + sn
+        psi <- theta0/lam0 + n*phi + 1
+        len <- append(len, qpearsonVI(1 - rho/2, a = kappa, b = psi, location = 0, 
                                           scale = phi/w) - qpearsonVI(rho/2, a = kappa, 
                                                                       b = psi, location = 0,
                                                                       scale = phi/w))
-        #}
-        #len <- append(len, mean(lens))
       }
     }
-    cat("n (BNPearson) =", n, "Comp est =", mean(len), "\n")
+    cat("n =", n, "; comp. estimado =", mean(len), "\n")
   } # FIM CRITERIO CCM2
 } # FIM
