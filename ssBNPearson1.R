@@ -51,6 +51,3 @@ ssBNPearson1 <- function(crit, lam0, theta0, phi, w, rho, len = NULL,
     cat("n =", n, "; comp. estimado =", mean(len), "\n")
   } # FIM CRITERIO CCM2
 } # FIM
-
-
-ssBNPearson1(crit ="CCM1", lam0=10, theta0=11, phi=5, w=1, rho=0.05, len = 2)
