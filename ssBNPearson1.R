@@ -1,9 +1,10 @@
 ssBNPearson1 <- function(crit, lam0, theta0, phi, w, rho, len = NULL, 
                         len.max = NULL, R = 1E3, n0 = 0) {
-  cat("\nCall for BNPearson \n")
+  cat("\nCall for BN-Pearson \n")
+  cat("Criterion =", crit, "\n")
   if (crit == "CVM") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; eps =", eps, "\n")
-  if (crit == "CCM1") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; l =", len, "\n")
-  if (crit == "CCM2") cat("phi =", phi,"; w =", w, "; theta0 =", theta0, "; l.max =", len.max, "\n")
+  if (crit == "CCM1") cat("lam0 =", lam0, "; theta0 =", theta0, "; phi =", phi, "; w =", w, "; l =", len, "\n")
+  if (crit == "CCM2") cat("lam0 =", lam0, "; theta0 =", theta0, "; phi =", phi, "; w =", w, "; l.max =", len.max, "\n")
   if (crit == "CVM") {
     break
   }
@@ -50,3 +51,6 @@ ssBNPearson1 <- function(crit, lam0, theta0, phi, w, rho, len = NULL,
     cat("n =", n, "; comp. estimado =", mean(len), "\n")
   } # FIM CRITERIO CCM2
 } # FIM
+
+
+ssBNPearson1(crit ="CCM1", lam0=10, theta0=11, phi=5, w=1, rho=0.05, len = 2)

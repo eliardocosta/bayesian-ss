@@ -1,9 +1,10 @@
 ssPoiGamma1 <- function(crit, lam0, theta0, w, rho, len = NULL, 
                          len.max = NULL, R = 1E3, n0 = 0) {
   cat("\nCall for Poisson-gamma \n")
-  if (crit == "CVM") cat("lam0 =", lam0,";theta0 =", theta0,"; w =", w, "; eps =", eps, "\n")
-  if (crit == "CCM1") cat("lam0 =", lam0,";theta0 =", theta0,"; w =", w, "; l =", len, "\n")
-  if (crit == "CCM2") cat("lam0 =", lam0,";theta0 =", theta0,"; w =", w, "; l.max =", len.max, "\n")
+  cat("Criterion =", crit, "\n")
+  if (crit == "CVM") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; eps =", eps, "\n")
+  if (crit == "CCM1") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; l =", len, "\n")
+  if (crit == "CCM2") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; l.max =", len.max, "\n")
   if (crit == "CVM") {
     break
   }

@@ -5,6 +5,10 @@
 ssBNPearson2 <- function(lf, lam0, theta0, phi, w, c, rho = NULL,
                         gam = NULL, nmax = 1E2, nrep = 1E1, lrep = 5E1,
                         plot = TRUE, ...) {
+  cat("\nCall for BN-Pearson \n")
+  cat("Loss function =", lf, "\n")
+  if (lf == 1) cat("lam0 =", lam0, "; theta0 =", theta0, "; phi =", phi,"; w =", w, "; rho =", rho, "; c =", c, "\n")
+  if (lf == 2) cat("lam0 =", lam0, "; theta0 =", theta0, "; phi =", phi,"; w =", w, "; gam =", gam, "; c =", c, "\n")
   risk <- numeric()
   if (lf == 1) {
     for (n in 1:nmax) {
@@ -56,8 +60,5 @@ ssBNPearson2 <- function(lf, lam0, theta0, phi, w, c, rho = NULL,
     plot(function(x)curve(x), 0, nmin + 0.1*nmax, col = "blue", add = TRUE)
     abline(v = nmin, col = "red")
   }
-  cat("\nCall for BN-Pearson \n")
-  if (lf == 1) cat("lam0 =", lam0, "; theta0 =", theta0, "; phi =", phi,"; w =", w, "; rho =", rho, "; c =", c, "\n")
-  if (lf == 2) cat("lam0 =", lam0, "; theta0 =", theta0, "; phi =", phi,"; w =", w, "; gam =", gam, "; c =", c, "\n")
   cat("n =", nmin)
 }
