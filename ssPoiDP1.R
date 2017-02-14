@@ -1,33 +1,13 @@
-ssPoiDP1 <- function(lam0, phi, w, rho, alpha, crit, len.max = NULL, len = NULL, eps = NULL,
+ssPoiDP1 <- function(crit, lam0, theta0, w, rho, alpha, len.max = NULL, len = NULL, eps = NULL,
                      cgrid = 1E-2, R = 1E2, n0 = 2, inc = c(1E2, 1E1, 5)) {
-  cat("\nCall for PoiDP \n")
-  if (crit == "CVM") cat("phi =", phi,"; w =", w, "; alpha =", alpha,"; eps =", eps, "\n")
-  if (crit == "CCM1") cat("phi =", phi,"; w =", w, "; alpha =", alpha,"; l =", len, "\n")
-  if (crit == "CCM2") cat("phi =", phi,"; w =", w, "; alpha =", alpha,"; l.max =", len.max, "\n")
+  cat("\nCall for Poisson-DP \n")
+  cat("Criterion =", crit, "\n")
+  if (crit == "CVM") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; alpha =", alpha,"; eps =", eps, "\n")
+  if (crit == "CCM1") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; alpha =", alpha,"; l =", len, "\n")
+  if (crit == "CCM2") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; alpha =", alpha,"; l.max =", len.max, "\n")
   inc <- c(sort(inc, decreasing = TRUE), 1) 
   if (crit == "CVM") { # INICIO CRITERIO CVM
-    n <- n0
-    for (i in 1:length(inc)) {
-      var.post <- eps + 1
-      while (median(var.post) > eps) {
-        n <- n + inc[i]
-        var.post <- numeric()
-        for (j in 1:R) {
-          x <- rnbinom(n, mu = w*lam0, size = phi)
-          obj.ppost <- exp.postDPmix(x = x, w = w, lam0 = lam0, phi = phi, alpha = alpha, cgrid = cgrid)
-          obj.dpost <- extract.prob(obj.ppost)
-          vals <- obj.dpost$lam
-          probs <- obj.dpost$ddist
-          med.post <- sum(vals*probs)
-          var.post <- append(var.post, sum(probs*(vals - med.post)^2))
-          cat(median(var.post), " ")
-        }
-        cat("\n cob.med e n \n")
-        cat(median(var.post), n, "\n")
-      }
-      if (i < length(inc)) n <- n - inc[i]
-    }
-    cat("n (PoiDP) =", n, "Cob est =", median(var.post), "\n")
+    break
   } # FIM CRITERIO CVM
   if (crit == "CCM1") { # INICIO CRITERIO CCM1
     n <- n0
@@ -56,7 +36,7 @@ ssPoiDP1 <- function(lam0, phi, w, rho, alpha, crit, len.max = NULL, len = NULL,
       }
       if (i < length(inc)) n <- n - inc[i]
     }
-    cat("n (PoiDP) =", n, "Cob est =", mean(cob), "\n")
+    cat("n =", n, "; cob. estimada =", mean(cob), "\n")
   } # FIM CRITERIO CCM1
   if (crit == "CCM2") { # INICIO CRITÉRIO CCM2
     n <- n0
@@ -87,6 +67,6 @@ ssPoiDP1 <- function(lam0, phi, w, rho, alpha, crit, len.max = NULL, len = NULL,
       }
       if (i < length(inc)) n <- n - inc[i]
     }
-    cat("n (PoiDP) =", n, "Comp est =", mean(len), "\n")
+    cat("n =", n, "; comp. estimado =", mean(len), "\n")
   } # FIM CRITERIO CCM2
 }  # FIM
