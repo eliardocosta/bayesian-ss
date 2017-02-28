@@ -4,7 +4,12 @@ ssPoiGamma1 <- function(crit, lam0, theta0, w, rho, len = NULL,
   cat("Criterion =", crit, "\n")
   if (crit == "CVM") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; eps =", eps, "\n")
   if (crit == "CCM1") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; l =", len, "\n")
-  if (crit == "CCM2") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; l.max =", len.max, "\n")
+  if (crit == "CCM2" || crit == "Aprox") cat("lam0 =", lam0, "; theta0 =", theta0, "; w =", w, "; l.max =", len.max, "\n")
+  if (crit == "Aprox") {
+    zrho <- qnorm(1 - rho/2)
+    n <- (theta0/(w*lam0))*(((lam0/theta0)*(2*zrho/len.max)*(gamma(theta0 + 0.5)/gamma(theta0)))^2 - 1)
+    cat("n =", ceiling(n), "\n")
+  }
   if (crit == "CVM") {
     break
   }
