@@ -42,7 +42,7 @@ ssPoiGamma2 <- function(lf, lam0, theta0, w, c, rho = NULL,
   G <- as.numeric(-mod$coef[2])
   nmin <- ceiling((E*G/c)^(1/(G + 1))-1)
   if (plot == TRUE) {
-    plot(rep(ns, each = nrep), risk, xlim = c(0, nmax), xlab = "n")
+    plot(rep(ns, each = nrep), risk, xlim = c(0, nmax), xlab = "n", ylab = "CT(n)")
     curve <- function(x) {c*x + E/(1 + x)^G}
     plot(function(x)curve(x), 0, nmax, col = "blue", add = TRUE)
     abline(v = nmin, col = "red")
