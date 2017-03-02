@@ -15,6 +15,7 @@ ssPoiDP1 <- function(crit, lam0, theta0, w, rho, alpha, len.max = NULL, len = NU
       cob <- 0
       while (mean(cob) < 1 - rho) {
         n <- n + inc[i]
+        print(n) # tirar depois
         cob <- numeric()
         for (j in 1:R) {
           x <- rnbinom(n, mu = w*lam0, size = theta0)
@@ -33,6 +34,7 @@ ssPoiDP1 <- function(crit, lam0, theta0, w, rho, alpha, len.max = NULL, len = NU
           }
           cob <- append(cob, sum(obj.dpost$ddist[conj.ind]))
         }
+        print(mean(cob)) # tirar depois
       }
       if (i < length(inc)) n <- n - inc[i]
     }
