@@ -21,10 +21,10 @@ ssBNPearson1 <- function(crit, lam0, theta0, phi, w, rho, len = NULL,
         sn <- sum(x)
         kappa <- theta0 + sn
         psi <- theta0/lam0 + n*phi + 1
-        a <- hpdPearsonVI(len = len, kappa = kappa, psi = psi, phi = phi, w = w)
+        ab <- hpdPearsonVI(kappa = kappa, psi = psi, phi = phi, w = w, len = len)
         cov <- append(cov, 
-                          ppearsonVI(a + len, a = kappa, b = psi, location = 0, 
-                                     scale = phi/w) - ppearsonVI(a, a = kappa, b = psi, 
+                          ppearsonVI(ab[2], a = kappa, b = psi, location = 0, 
+                                     scale = phi/w) - ppearsonVI(ab[1], a = kappa, b = psi, 
                                                              location = 0, scale = phi/w))
       }
     }
@@ -42,10 +42,8 @@ ssBNPearson1 <- function(crit, lam0, theta0, phi, w, rho, len = NULL,
         sn <- sum(x)
         kappa <- theta0 + sn
         psi <- theta0/lam0 + n*phi + 1
-        len <- append(len, qpearsonVI(1 - rho/2, a = kappa, b = psi, location = 0, 
-                                          scale = phi/w) - qpearsonVI(rho/2, a = kappa, 
-                                                                      b = psi, location = 0,
-                                                                      scale = phi/w))
+        ab <- hpdPearsonVI(kappa = kappa, psi = psi, phi = phi, w = w, rho = rho)
+        len <- append(len, ab[2] - ab[1])
       }
     }
     cat("n =", n, "; comp. estimado =", mean(len), "\n")

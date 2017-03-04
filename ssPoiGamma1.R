@@ -23,8 +23,8 @@ ssPoiGamma1 <- function(crit, lam0, theta0, w, rho, len = NULL,
         sn <- rnbinom(1, mu = n*w*lam0, size = n*theta0)
         kappa <- theta0 + sn
         psi <- n*w + theta0/lam0
-        a <- len/(exp((psi*len)/(kappa - 1)) - 1)
-        cov <- append(cov, pgamma(a + len, shape = kappa, rate = psi) - pgamma(a, 
+        ab <- hpdGamma(kappa = kappa, psi = psi, len = len)
+        cov <- append(cov, pgamma(ab[2], shape = kappa, rate = psi) - pgamma(ab[1], 
                                                                                     shape = kappa, rate = psi))
       }
     }
@@ -40,9 +40,8 @@ ssPoiGamma1 <- function(crit, lam0, theta0, w, rho, len = NULL,
         sn <- rnbinom(1, mu = n*w*lam0, size = n*theta0)
         kappa <- theta0 + sn
         psi <- n*w + theta0/lam0
-        len <- append(len, qgamma(1 - rho/2, shape = kappa,
-                                       rate = psi) - qgamma(rho/2, 
-                                                              shape = kappa, rate = psi))
+        ab <- hpdGamma(kappa = kappa, psi = psi, rho = rho)
+        len <- append(len, ab[2] - ab[1])
       }
     }
     cat("n =", n, "; comp. estimado =", mean(len), "\n")
